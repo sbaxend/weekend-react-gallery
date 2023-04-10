@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 
 function App() {
   let [imageGallery, setImageGallery] = useState([]);
+  const [selectedImageId, setSelectedImageId] = useState(null);
+
   function fetchGallery() {
     console.log("in fetchGallery");
     axios
@@ -22,6 +24,21 @@ function App() {
   useEffect(() => {
     fetchGallery();
   }, []);
+
+  function likePhoto(id) {
+    console.log('In likePhoto function');
+    axios.put(`/gallery/like/${id}`).then((response) => {
+      console.log(response);
+      fetchGallery();
+    }).catch((error) => {
+      console.log('error');
+      alert(`something went wrong ${error}`)
+    })
+  }
+
+  function toggleImage(id) {
+    setSelectedImageId(id === selectedImageId ? null : id);
+  }
   // toggle button or an add button?
   return (
     <div className="App">
@@ -29,12 +46,24 @@ function App() {
         <h1 className="App-title">Gallery of My Life</h1>
       </header>
       <div>
-        {imageGallery.map((item) => (
+      {imageGallery.map((item) => (
           <div key={item.id}>
-            <img src={item.path} alt={item.description} />
+            {/* Conditionally render the image or the description */}
+            {selectedImageId === item.id ? (
+              <div>{item.description}</div>
+            ) : (
+              <img src={item.path} alt={item.description} onClick={() => toggleImage(item.id)} />
+            )}
+            <br />
+            <button onClick={() => likePhoto(item.id)}>I Love It!</button>
+            <h2>{item.likes}</h2>
+            <br />
+            {/* <img src={item.path} alt={item.description} />
             <h2>{item.description}</h2>
             <br />
-            <button>I Love It!</button>
+            <button onClick={() => likePhoto(item.id)}>I Love It!</button>
+            <h2>{item.likes}</h2> */}
+            <br />
           </div>
         ))}
       </div>
