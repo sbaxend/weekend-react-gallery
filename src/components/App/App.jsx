@@ -36,9 +36,17 @@ function App() {
     })
   }
 
+
   function toggleImage(id) {
-    setSelectedImageId(id === selectedImageId ? null : id);
+    if (selectedImageId === id) {
+      // If the currently selected image is clicked again, toggle back to the image
+      setSelectedImageId(null);
+    } else {
+      // Otherwise, set the selected image to the clicked image
+      setSelectedImageId(id);
+    }
   }
+
   // toggle button or an add button?
   return (
     <div className="App">
@@ -50,19 +58,13 @@ function App() {
           <div key={item.id}>
             {/* Conditionally render the image or the description */}
             {selectedImageId === item.id ? (
-              <div>{item.description}</div>
+              <div onClick={() => toggleImage(item.id)}>{item.description}</div>
             ) : (
               <img src={item.path} alt={item.description} onClick={() => toggleImage(item.id)} />
             )}
             <br />
             <button onClick={() => likePhoto(item.id)}>I Love It!</button>
             <h2>{item.likes}</h2>
-            <br />
-            {/* <img src={item.path} alt={item.description} />
-            <h2>{item.description}</h2>
-            <br />
-            <button onClick={() => likePhoto(item.id)}>I Love It!</button>
-            <h2>{item.likes}</h2> */}
             <br />
           </div>
         ))}
