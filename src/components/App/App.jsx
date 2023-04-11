@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 
 import GalleryList from "./GalleryList";
 import GalleryItem from "./GalleryItem";
+import Card from '@mui/material/Card';
 
+import AppBar from '@mui/material/AppBar';
 function App() {
   
   let [imageGallery, setImageGallery] = useState([]);
@@ -49,10 +51,10 @@ function App() {
 
   // toggle button or an add button?
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className="App-title">Gallery of My Life</h1>
-      </header>
+    <Card className="App">
+      <AppBar className="App-header">
+        <h1 className="App-title">Car Gallery</h1>
+      </AppBar>
       <div>
         <GalleryList
           imageGallery={imageGallery}
@@ -60,7 +62,7 @@ function App() {
           likePhoto={likePhoto}
         />
       </div>
-    </div>
+    </Card>
   );
 }
 

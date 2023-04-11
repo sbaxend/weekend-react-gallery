@@ -2,22 +2,28 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import GalleryItem from "./GalleryItem";
 
+import Grid from '@mui/material/Grid';
+
+import Box from '@mui/material/Box';
+
 function GalleryList({ imageGallery, likePhoto, fetchGallery }) {
     
   
 
   return (
     <div>
-         <div className="galleryList">
+         <Grid container spacing={2}>
       {imageGallery.map((image) => (
+        <Grid key={image.id} item xs={12} sm={6} md={4}>
         <GalleryItem
           key={image.id}
           image={image}
           fetchGallery={fetchGallery}
           likePhoto={likePhoto}
         />
+        </Grid>
       ))}
-    </div>
+    </Grid>
 
 
 
